@@ -88,6 +88,24 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.stopUpdatingLocation()
     }
     
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [AnyObject]){
+        var lastLocation = locations.last as! CLLocation
+        var traveledDistance = CLLocationDistance()
+        
+        /* for the ever first call the if check should fail because lastLocation is initially nil in your code (I assume) */
+        if lastLocation != nil {
+            
+            /* this will start adding a distance at the second call of the callback */
+            traveledDistance += lastLocation.distance(from: locations.last as! CLLocation)
+            
+            print("\(lastLocation)")
+            //distanceLabel.text = "\(traveledDistance)"
+        }
+        
+        /* here we are saving the current location to our variable for later calculation */
+        lastLocation = locations.last as! CLLocation
+    }
+    
     
     // MARK :- CLLocationManager delegate
     func locationManager(_ manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
@@ -117,6 +135,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             previousLocation = newLocation
         }
     }
+    
+    
     
     // MARK :- MKMapView delegate
     func mapView(_ mapView: MKMapView!, rendererFor overlay: MKOverlay!) -> MKOverlayRenderer! {

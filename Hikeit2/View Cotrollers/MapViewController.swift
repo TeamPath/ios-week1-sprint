@@ -13,11 +13,17 @@ import CoreLocation
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    
+    @IBOutlet weak var displayTimeLabel: UILabel!
+    
     @IBOutlet weak var mapView: MKMapView!
+   
+    var timer = Timer()
     var locationManager: CLLocationManager!
     var previousLocation : CLLocation!
     var gestureRecognizer: UITapGestureRecognizer!
     var hike = Hike()
+    var startTime = TimeInterval()
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -29,7 +35,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         backgroundImage.image = UIImage(named: "Green General Background.png")
         self.view.insertSubview(backgroundImage, at: 0)
         
-        
+        startTimer()
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
@@ -86,9 +92,46 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewWillDisappear(_ animated: Bool) {
         locationManager.stopUpdatingHeading()
         locationManager.stopUpdatingLocation()
+        
     }
     
-    
+    //MARK Update timer function chad
+    func updateTime() {
+        
+        let currentTime = NSDate.timeIntervalSinceReferenceDate
+        
+        //Find the difference between current time and start time.
+        
+        var elapsedTime: TimeInterval = currentTime - startTime
+        
+        //calculate the minutes in elapsed time.
+        
+        let minutes = UInt8(elapsedTime / 60.0)
+        
+        elapsedTime -= (TimeInterval(minutes) * 60)
+        
+        //calculate the seconds in elapsed time.
+        
+        let seconds = UInt8(elapsedTime)
+        
+        elapsedTime -= TimeInterval(seconds)
+        
+        //find out the fraction of hours to be displayed.
+        
+        let hours = UInt8(elapsedTime / 3600)
+        elapsedTime -= (TimeInterval(hours) * 3600)
+        
+        //add the leading zero for minutes, seconds and millseconds and store them as string constants
+        
+        let strMinutes = String(format: "%02d", minutes)
+        let strSeconds = String(format: "%02d", seconds)
+        let strHours = String(format: "%02d", hours)
+        
+        //concatenate minuets, seconds and milliseconds as assign it to the UILabel
+        
+        displayTimeLabel.text = " \(strHours):\(strMinutes): \(strSeconds)"
+        
+    }
     // MARK :- CLLocationManager delegate
     func locationManager(_ manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
         
@@ -174,7 +217,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             present(viewController, animated: true, completion: nil)
         }
     }
+    func startTimer(){
+        if !timer.isValid {
+            let aSelector : Selector = #selector(MapViewController.updateTime)
+            timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector,     userInfo: nil, repeats: true)
+            startTime = NSDate.timeIntervalSinceReferenceDate
 
+    }
+    }
+//    func stopTimer(_ sender: Any) {
+//        timer.invalidate()
+//        timer == nil
+//    }
+
+//MARK: IBACtion
+    
+   
+    @IBAction func stop(_ sender: Any) {
+        timer.invalidate()
+        timer == nil
+    }
     
     
     @IBAction func choosePhoto(_ sender: Any) {

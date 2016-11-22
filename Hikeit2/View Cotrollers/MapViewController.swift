@@ -23,13 +23,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "Green General Background.png")
-        self.view.insertSubview(backgroundImage, at: 0)
-        
-        
+
+        Styling()
+
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
@@ -53,22 +49,27 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.mapType = MKMapType.hybrid
         mapView.userTrackingMode = MKUserTrackingMode.followWithHeading
         
-        UINavigationBar.appearance().barTintColor = swiftColor
         
+        
+        
+    }
+    
+    
+    func Styling()  {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 38, height: 38))
         imageView.contentMode = .scaleAspectFill
         let image = UIImage(named: "logo_main.png")
         imageView.image = image
         navigationItem.titleView = imageView
         
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "Green General Background.png")
+        self.view.insertSubview(backgroundImage, at: 0)
         
+        let swiftColor = UIColor(red: 177.0/255.0, green: 221/255.0, blue: 214/255.0, alpha: 1)
         
-        
-        
+        UINavigationBar.appearance().barTintColor = swiftColor
     }
-    
-    let swiftColor = UIColor(red: 177.0/255.0, green: 221/255.0, blue: 214/255.0, alpha: 1)
-    
     
     
     override func didReceiveMemoryWarning() {
@@ -166,7 +167,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewImage))
         imageView.addGestureRecognizer(gestureRecognizer)
     }
-
+    
     func viewImage () {
         if let image = imageView.image {
             HikeStore.shared.selectedImage = image
@@ -174,7 +175,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             present(viewController, animated: true, completion: nil)
         }
     }
-
+    
     
     
     @IBAction func choosePhoto(_ sender: Any) {
@@ -190,10 +191,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         hike.image = imageView.image
     }
-    
-    
-    
-    
     
 }
 

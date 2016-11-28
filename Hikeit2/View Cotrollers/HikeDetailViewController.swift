@@ -15,6 +15,10 @@ class HikeDetailViewController: UIViewController {
     @IBOutlet weak var slider: UISlider!
     
     @IBOutlet weak var imageView: UIImageView!
+    
+    
+    
+    
     var imagePassed = UIImage()
     let map = MapViewController()
     

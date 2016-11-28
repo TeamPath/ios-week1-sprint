@@ -192,6 +192,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         hike.image = imageView.image
     }
     
+    
+    // Takes a snapshot and calls back with the generated UIImage
+    static func takeSnapshot(mapView: MKMapView, withCallback: @escaping (UIImage?, NSError?) -> ()) {
+        let options = MKMapSnapshotOptions()
+        options.region = mapView.region
+        options.size = mapView.frame.size
+        options.scale = UIScreen.main.scale
+        
+        let snapshotter = MKMapSnapshotter(options: options)
+        snapshotter.start() { snapshot, error in
+            guard snapshot != nil else {
+                withCallback(nil, error as NSError?)
+                return
+            }
+            
+            withCallback(snapshot!.image, nil)
+        }
+    }
+    
+
 }
 
 extension MapViewController: UINavigationControllerDelegate,UIImagePickerControllerDelegate {

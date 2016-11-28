@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:paintsville.gpx">
+   </FileRef>
+   <FileRef
       location = "group:Hikeit2.xcodeproj">
    </FileRef>
    <FileRef

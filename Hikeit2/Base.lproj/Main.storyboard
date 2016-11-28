@@ -167,6 +167,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="3"/>
                                 <state key="normal" backgroundImage="Pause"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQ4-ZR-CjO">
+                                <rect key="frame" x="161" y="72" width="92" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -193,13 +200,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="displayTimeLabel" destination="PQ4-ZR-CjO" id="Ze2-Rd-96A"/>
                         <outlet property="imageView" destination="B90-67-x3i" id="sGU-vR-pHO"/>
                         <outlet property="mapView" destination="UR3-cU-F14" id="i3f-qz-lBR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8QR-yH-rku" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2691.304347826087" y="35.054347826086961"/>
+            <point key="canvasLocation" x="2689.8550724637685" y="35.054347826086961"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="szt-hs-RI2">
@@ -302,19 +310,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vvz-7X-Jho">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Hike Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vvz-7X-Jho">
                                 <rect key="frame" x="20" y="72" width="374" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CyV-gO-afV">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Hike Location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CyV-gO-afV">
                                 <rect key="frame" x="20" y="121" width="374" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMf-3b-m5J">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMf-3b-m5J">
                                 <rect key="frame" x="20" y="159" width="374" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -360,8 +368,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tA1-sP-whN">
-                                <rect key="frame" x="20" y="273" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="20" y="273" width="117" height="30"/>
+                                <state key="normal" title="Choose a Picture"/>
                                 <connections>
                                     <action selector="pickHikePhoto:" destination="dEE-ad-05f" eventType="touchUpInside" id="qq0-Sn-GJ2"/>
                                 </connections>
@@ -416,6 +424,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="ur6-Kx-pdF">
                             <connections>
                                 <action selector="saveHikeToFirebase:" destination="dEE-ad-05f" id="wBC-S0-qoX"/>
+                                <segue destination="BYZ-38-t0r" kind="show" id="ZIt-f3-Agz"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -509,7 +518,11 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" id="U8T-TS-EBV">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="BPd-JJ-9aE"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="BPd-JJ-9aE">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="show" id="8FN-We-bRj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5r-qu-aKK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -611,6 +624,7 @@
         <image name="defaultpng" width="640" height="480"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="x3R-3P-fq0"/>
+        <segue reference="ZIt-f3-Agz"/>
+        <segue reference="zJ3-Ga-dHh"/>
     </inferredMetricsTieBreakers>
 </document>
